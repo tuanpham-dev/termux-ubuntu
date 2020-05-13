@@ -1,9 +1,7 @@
 #!/bin/bash
 
 #Get the necessary components
-sudo apt-get update
-sudo apt-get install xfce4 xfce4-goodies xfce4-terminal exo-utils tigervnc-standalone-server tigervnc-common dbus-x11 pavuconrol libexo-1-0 ffmpeg -y
-sudo apt-get clean
+sudo apt-get update && sudo apt-get install xfce4 xfce4-goodies xfce4-terminal exo-utils dbus-x11 pavuconrol libexo-1-0 ffmpeg --no-install-recommends -y
 mkdir -p ~/.vnc
 
 echo '#!/bin/bash

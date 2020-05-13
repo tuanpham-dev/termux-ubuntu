@@ -3,7 +3,7 @@
 # suppress dmesg output while the script is running
 # echo 1 > /proc/sys/kernel/printk
 apt update
-apt install sudo dialog -y
+apt install sudo dialog tigervnc-standalone-server tigervnc-common -y
 #variables
 TMPDIR=/var/tmp
 SWITCH=/usr/share/andronix/switchuser
@@ -50,6 +50,7 @@ create_oem_install() {
   msg "Setting full name to $FULLNAME..."
   chfn -f "$FULLNAME" $(cat $TMPDIR/user) 1> /dev/null 2>&1
   msg "Setting password for $USER..."
+  mkdir -p /home/$USER/.vnc
   passwd $(cat $TMPDIR/user) < $TMPDIR/password 1> /dev/null 2>&1
   /usr/local/bin/vncpasswd -f <<<"$PASSWORD"$'\n'"$PASSWORD" > /home/$USER/.vnc/passwd 
   sed -i "/^root/a $USER ALL=(ALL) ALL" /etc/sudoers
