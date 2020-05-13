@@ -42,7 +42,7 @@ create_oem_install() {
   echo "$ROOTPASSWORD" >> $TMPDIR/rootpassword
   msg "Setting root password..."
   passwd root < $TMPDIR/rootpassword 1> /dev/null 2>&1
-  /usr/bin/vncpasswd -f <<<"$ROOTPASSWORD"$'\n'"$ROOTPASSWORD" > /root/.vnc/passwd 
+  /usr/local/bin/vncpasswd -f <<<"$ROOTPASSWORD"$'\n'"$ROOTPASSWORD" > /root/.vnc/passwd 
   msg "Adding user $USER..."
   echo "" > $TMPDIR/status
   useradd -m -G sudo -s /bin/bash -U $(cat $TMPDIR/user) 1> /dev/null 2>&1 && echo "done" > $TMPDIR/status &
@@ -51,7 +51,7 @@ create_oem_install() {
   chfn -f "$FULLNAME" $(cat $TMPDIR/user) 1> /dev/null 2>&1
   msg "Setting password for $USER..."
   passwd $(cat $TMPDIR/user) < $TMPDIR/password 1> /dev/null 2>&1
-  /usr/bin/vncpasswd -f <<<"$PASSWORD"$'\n'"$PASSWORD" > /home/$USER/.vnc/passwd 
+  /usr/local/bin/vncpasswd -f <<<"$PASSWORD"$'\n'"$PASSWORD" > /home/$USER/.vnc/passwd 
   sed -i "/^root/a $USER ALL=(ALL) ALL" /etc/sudoers
   msg "Applying system settings..."
   systemctl disable systemd-resolved.service 1> /dev/null 2>&1
