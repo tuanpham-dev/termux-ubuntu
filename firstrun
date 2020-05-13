@@ -1,0 +1,221 @@
+#!/bin/bash
+
+# suppress dmesg output while the script is running
+# echo 1 > /proc/sys/kernel/printk
+apt update
+apt install sudo dialog -y
+#variables
+TMPDIR=/var/tmp
+SWITCH=/usr/share/andronix/switchuser
+
+# Functions
+msg() {
+  ALL_OFF="\e[1;0m"
+  BOLD="\e[1;1m"
+  GREEN="${BOLD}\e[1;32m"
+  local mesg=$1; shift
+  printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+
+show_spinner() {
+  local -r pid="${1}"
+  local -r delay='0.75'
+  local spinstr='\|/-'
+  local temp
+  printf "${GREEN} This might take a while.. "
+  while ! grep -q "done" $TMPDIR/status ; do
+    temp="${spinstr#?}"
+    printf " [%c]  " "${spinstr}"
+    spinstr=${temp}${spinstr%"${temp}"}
+    sleep "${delay}"
+    printf "\b\b\b\b\b\b"
+  done
+  printf "Done!  \b\b\b\b"
+  echo ""
+}
+
+create_oem_install() {
+  echo "$USER" > $TMPDIR/user
+  echo "$PASSWORD" >> $TMPDIR/password
+  echo "$PASSWORD" >> $TMPDIR/password
+  echo "$ROOTPASSWORD" >> $TMPDIR/rootpassword
+  echo "$ROOTPASSWORD" >> $TMPDIR/rootpassword
+  msg "Setting root password..."
+  passwd root < $TMPDIR/rootpassword 1> /dev/null 2>&1
+  /usr/bin/vncpasswd -f <<<"$ROOTPASSWORD"$'\n'"$ROOTPASSWORD" > /root/.vnc/passwd 
+  msg "Adding user $USER..."
+  echo "" > $TMPDIR/status
+  useradd -m -G sudo -s /bin/bash -U $(cat $TMPDIR/user) 1> /dev/null 2>&1 && echo "done" > $TMPDIR/status &
+  show_spinner
+  msg "Setting full name to $FULLNAME..."
+  chfn -f "$FULLNAME" $(cat $TMPDIR/user) 1> /dev/null 2>&1
+  msg "Setting password for $USER..."
+  passwd $(cat $TMPDIR/user) < $TMPDIR/password 1> /dev/null 2>&1
+  /usr/bin/vncpasswd -f <<<"$PASSWORD"$'\n'"$PASSWORD" > /home/$USER/.vnc/passwd 
+  sed -i "/^root/a $USER ALL=(ALL) ALL" /etc/sudoers
+  msg "Applying system settings..."
+  systemctl disable systemd-resolved.service 1> /dev/null 2>&1
+  
+  msg "Cleaning install for unwanted files..."
+  rm -rf /var/log/*
+  
+  # Remove temp files on host
+  rm -rf $TMPDIR/user $TMPDIR/password $TMPDIR/rootpassword
+}
+
+
+# Using Dialog to ask for user input for variables
+USER=$(dialog --clear --title "Finish Andronix Install" \
+	--inputbox "Enter username:
+(Usernames can only be lower case)" 8 50 \
+  3>&1 1>&2 2>&3 3>&-)
+
+if [ ! -z "$USER" ]
+then
+FULLNAME=$(dialog --clear --title "Finish Andronix Install" \
+  --inputbox "Enter Full Name for $USER:" 8 50 \
+  3>&1 1>&2 2>&3 3>&- \
+	)
+fi
+
+if [ ! -z "$FULLNAME" ]
+then
+PASSWORD=$(dialog --clear --title "Finish Andronix Install" \
+  --insecure \
+  --passwordbox "Enter Password for $USER (at least 6 characters):" 8 50 \
+  3>&1 1>&2 2>&3 3>&- )
+else 
+	clear
+	msg "Configuration aborted. Restarting OEM script..."
+	sleep 5 && exec bash /usr/share/andronix/firstrun
+	#exit 1
+fi
+
+if [ ! -z "$PASSWORD" ]
+then
+LEN=${#PASSWORD}
+stat=1
+	if [[ "$LEN" -ge 6 ]]; then
+		stat=$?
+	else 
+		clear
+		msg "Password does not match minimum lenght of 6 characters. Restarting OEM script..."
+		sleep 5 && exec bash /usr/share/andronix/firstrun
+	fi
+fi
+
+if [ ! -z "$PASSWORD" ]
+then
+CONFIRMPASSWORD=$(dialog --clear --title "Andronix Installer" \
+	--insecure --passwordbox "Confirm Password for $USER:" 8 50 \
+  3>&1 1>&2 2>&3 3>&- \
+	)
+else 
+	clear
+	msg "Configuration aborted. Restarting OEM script..."
+	sleep 5 && exec bash /usr/share/andronix/firstrun
+	#exit 1
+fi
+
+if [[ "$PASSWORD" != "$CONFIRMPASSWORD" ]]; then
+  clear
+  msg "User passwords do not match! Restarting OEM script..."
+  sleep 5 && exec bash /usr/share/andronix/firstrun
+  #exit 1
+fi
+
+if [ ! -z "$CONFIRMPASSWORD" ]
+then
+ROOTPASSWORD=$(dialog --clear --title "Finish Andronix Install" \
+  --insecure \
+  --passwordbox "Enter Root Password (at least 6 characters):" 8 50 \
+  3>&1 1>&2 2>&3 3>&- \
+	)
+else 
+	clear
+	msg "Configuration aborted. Restarting OEM script..."
+	sleep 5 && exec bash /usr/share/andronix/firstrun
+	#exit 1
+fi
+
+if [ ! -z "$ROOTPASSWORD" ]
+then
+LEN=${#ROOTPASSWORD}
+stat=1
+	if [[ "$LEN" -ge 6 ]]; then
+		stat=$?
+	else 
+		clear
+		msg "Password does not match minimum lenght of 6 characters. Restarting OEM script..."
+		sleep 5 && exec bash /usr/share/andronix/firstrun
+	fi
+fi
+
+if [ ! -z "$ROOTPASSWORD" ]
+then
+CONFIRMROOTPASSWORD=$(dialog --clear --title "Andronix Installer" \
+	--insecure --passwordbox "Confirm Root Password:" 8 50 \
+  3>&1 1>&2 2>&3 3>&- \
+	)
+else 
+	clear
+	msg "Configuration aborted. Restarting OEM script..."
+	sleep 5 && exec bash /usr/share/andronix/firstrun
+	#exit 1
+fi
+
+if [[ "$ROOTPASSWORD" != "$CONFIRMROOTPASSWORD" ]]; then
+  clear
+  msg "Root passwords do not match! Restarting OEM script..."
+  sleep 5 && exec bash /usr/share/andronix/firstrun
+  #exit 1
+fi
+
+if [ ! -z "$CONFIRMROOTPASSWORD" ]
+then
+dialog --clear --title "Finish Andronix Install" \
+  --yesno "Is the below information correct:
+  Username = $USER
+  Full Name for $USER = $FULLNAME
+  Password for $USER = $PASSWORD
+  Password for root = $ROOTPASSWORD" 20 50 \
+  3>&1 1>&2 2>&3 3>&-
+else
+  clear
+  msg "Configuration aborted. Restarting OEM script..."
+  sleep 5 && exec bash /usr/share/andronix/firstrun
+  #exit 1
+fi
+
+response=$?
+case $response in
+  0) clear; msg "Proceeding....";;
+  1) clear; msg "Configuration aborted. Restarting OEM script..."; sleep 5 && exec bash /usr/share/andronix/firstrun;;
+  255) clear; msg "Configuration aborted. Restarting OEM script..."; sleep 5 && exec bash /usr/share/andronix/firstrun;;
+esac
+
+create_oem_install
+
+msg "Configuration complete. Cleaning up..."
+# Here we export the DISPLAY variable for all know users 
+echo "export DISPLAY=:1" >> /root/.bashrc && echo "export DISPLAY=:1" >> /home/$USER/.profile
+touch /home/$USER/.hushlogin
+# Here we overwrite .bash_login to drop the oem first run and the hack to redirect the user after the oem intaller has finished.
+echo "exec su - $USER" > $SWITCH 
+echo "$SWITCH; exit" > /root/.bash_profile
+chmod +x $SWITCH
+if [ -e /etc/ssh/sshd_config ]
+then
+	sed -i s/"PermitRootLogin yes"/"#PermitRootLogin prohibit-password"/g /etc/ssh/sshd_config
+fi
+msg "You can start using your newly installed Andronix Modded OS..."
+wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.profile -O ~/.profile.1 > /dev/null
+cat ~/.profile.1 >> ~/.profile && rm -rf ~/.profile.1
+echo "#!/bin/bash
+wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/xfce.sh -O ~/xfce.sh
+chmod +x ~/xfce.sh
+bash ~/xfce.sh
+rm -rf ~/.bash_profile" > /home/$USER/.bash_profile 
+chmod +x /home/$USER/.bash_profile
+# Replace the current activity with a new shell for the user
+exec su - $USER
