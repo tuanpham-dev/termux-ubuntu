@@ -6,7 +6,7 @@ sudo apt install udisks2 -y
 echo "" > /var/lib/dpkg/info/udisks2.postinst
 sudo dpkg --configure -a
 sudo apt-mark hold udisks2
-sudo apt-get install xfce4 xfce4-goodies xfce4-terminal exo-utils tigervnc-standalone-server tigervnc-common dbus-x11 chromium-browser --no-install-recommends -y
+sudo apt-get install xfce4 xfce4-goodies xfce4-terminal exo-utils tigervnc-standalone-server tigervnc-common dbus-x11 chromium-browser libexo-1-0 ffmpeg --no-install-recommends -y
 sudo apt-get clean
 mkdir -p ~/.vnc
 
@@ -24,7 +24,7 @@ chmod +x ~/.vnc/xstartup
 echo " "
 
 echo "Running browser patch"
-wget https://raw.githubusercontent.com/AndronixApp/AndronixOrigin/master/Uninstall/ubchromiumfix.sh && chmod +x ubchromiumfix.sh
+wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/ubchromiumfix.sh && chmod +x ubchromiumfix.sh
 ./ubchromiumfix.sh && rm -rf ubchromiumfix.sh
 
 echo "You can now start vncserver by running vncserver-start"
