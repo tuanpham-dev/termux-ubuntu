@@ -33,6 +33,8 @@ On Ubuntu, run this command to start VNC Server:
 vncserver-start
 ```
 
+Then you can use VNC Client to connect to `127.0.0.1:1` or `127.0.0.1:5901`
+
 ### Stop VNC Server
 
 On Ubuntu, run this command to stop VNC Server:
