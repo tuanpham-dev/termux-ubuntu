@@ -79,6 +79,7 @@ mkdir -p ubuntu20-fs/usr/share/andronix
 mkdir -p ubuntu20-fs/var/tmp
 rm -rf ubuntu20-fs/usr/local/bin/*
 echo "127.0.0.1 localhost localhost" > $folder/etc/hosts
+echo "Set disable_coredump false" > $folder/etc/sudo.conf
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.profile -O ubuntu20-fs/root/.profile.1 > /dev/null
 cat $folder/root/.profile.1 >> $folder/root/.profile && rm -rf $folder/root/.profile.1
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.bash_profile -O ubuntu20-fs/root/.bash_profile > /dev/null
