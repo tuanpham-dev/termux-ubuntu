@@ -213,9 +213,9 @@ msg "You can start using your newly installed Andronix Modded OS..."
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.profile -O ~/.profile.1 > /dev/null
 cat ~/.profile.1 >> ~/.profile && rm -rf ~/.profile.1
 echo "#!/bin/bash
-wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/xfce.sh -O ~/xfce.sh
-chmod +x ~/xfce.sh
-bash ~/xfce.sh
+wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/dde.sh -O ~/dde.sh
+chmod +x ~/dde.sh
+bash ~/dde.sh
 rm -rf ~/.bash_profile" > /home/$USER/.bash_profile 
 chmod +x /home/$USER/.bash_profile
 # Replace the current activity with a new shell for the user
