@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #Get the necessary components
+sudo apt install software-properties-common dbus-x11 exo-utils dbus-x11 pavucontrol libexo-1-0 ffmpeg
 sudo add-apt-repository ppa:ubuntudde-dev/stable -y
-sudo apt-get update && sudo apt-get install ubuntudde-dde deepin-terminal -y
+sudo apt update && sudo apt install ubuntudde-dde deepin-terminal -y
 mkdir -p ~/.vnc
 
 echo '#!/bin/bash

@@ -1,6 +1,7 @@
 # Install Ubuntu20 on Termux Android
 
 This installs Ubuntu 20 with xfce4 desktop on Termux. All scripts are from Andronix, I just compose and edit them to make the installer easier and smoother. It includes:
+
 - [x] Ubuntu 20
 - [x] XFCE4 Desktop
 - [x] TigerVNC Server
@@ -11,6 +12,7 @@ This installs Ubuntu 20 with xfce4 desktop on Termux. All scripts are from Andro
 ## Installation
 
 Copy and paste this command to Termux:
+
 ```bash
 pkg update -y && pkg install wget curl proot tar -y && wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/ubuntu.sh && chmod +x ubuntu.sh && bash ubuntu.sh
 ```
@@ -56,5 +58,5 @@ You can run APT script from headmelted to add repository:
 You will get error and now you can install with this command:
 
 ```bash
-sudo apt-get install code-oss
+sudo apt install code-oss
 ```

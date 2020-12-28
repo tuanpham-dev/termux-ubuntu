@@ -1,7 +1,13 @@
 #!/bin/bash
 
 #Get the necessary components
-sudo apt-get update && sudo apt-get install xfce4 xfce4-goodies xfce4-terminal exo-utils dbus-x11 pavucontrol libexo-1-0 ffmpeg --no-install-recommends -y
+sudo apt-get update
+sudo apt install udisks2 -y
+echo "" > /var/lib/dpkg/info/udisks2.postinst
+sudo dpkg --configure -a
+sudo apt-mark hold udisks2
+
+sudo apt update && sudo apt install xfce4 xfce4-goodies xfce4-terminal exo-utils dbus-x11 pavucontrol libexo-1-0 ffmpeg --no-install-recommends -y
 mkdir -p ~/.vnc
 
 echo '#!/bin/bash
