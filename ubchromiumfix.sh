@@ -1,12 +1,15 @@
 #!/bin/bash
-echo "Enabling PPA support..."
-[ ! -f .parrot ] && sudo apt update; sudo apt install software-properties-common --no-install-recommends -y
-echo " Adding chromium-team stable ppa"
-sudo echo "deb http://ppa.launchpad.net/ultrahacx/chromium-universal/ubuntu bionic main 
-deb-src http://ppa.launchpad.net/ultrahacx/chromium-universal/ubuntu bionic main " >> /etc/apt/sources.list
-echo "Fetching and importing chromium-team GPG keys..."
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8FEA526CE21182D1
-echo "Installing chromium-browser"
-sudo apt update; sudo apt install chromium-browser --no-install-recommends -y
-echo "Patching application shortcuts..."
-sed -i 's/chromium-browser %U/chromium-browser --no-sandbox %U/g' /usr/share/applications/chromium-browser.desktop
+echo "Adding Debian repo for Chromium installation"
+
+echo "deb http://ftp.debian.org/debian buster main
+deb http://ftp.debian.org/debian buster-updates main" >> /etc/apt/sources.list
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys DCC9EFBF77E11517
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA8E81B4331F7F50
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A
+
+apt update -y
+apt install chromium -y
+
+sed -i 's/chromium %U/chromium --no-sandbox %U/g' /usr/share/applications/chromium.desktop

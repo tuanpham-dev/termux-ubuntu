@@ -3,7 +3,7 @@
 # suppress dmesg output while the script is running
 # echo 1 > /proc/sys/kernel/printk
 apt update
-apt install sudo dialog tigervnc-standalone-server tigervnc-common -y
+apt install sudo dialog -y
 #variables
 TMPDIR=/var/tmp
 SWITCH=/usr/share/andronix/switchuser
@@ -210,12 +210,13 @@ then
 	sed -i s/"PermitRootLogin yes"/"#PermitRootLogin prohibit-password"/g /etc/ssh/sshd_config
 fi
 msg "You can start using your newly installed Andronix Modded OS..."
-wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.profile -O ~/.profile.1 > /dev/null
-cat ~/.profile.1 >> ~/.profile && rm -rf ~/.profile.1
+wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.profile -O /home/$USER/.profile.1 > /dev/null
+cat /home/$USER/.profile.1 >> /home/$USER/.profile && rm -rf /home/$USER/.profile.1
 echo "#!/bin/bash
 wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/xfce.sh -O ~/xfce.sh
 chmod +x ~/xfce.sh
 bash ~/xfce.sh
+rm -rf ~/xfce.sh
 rm -rf ~/.bash_profile" > /home/$USER/.bash_profile 
 chmod +x /home/$USER/.bash_profile
 # Replace the current activity with a new shell for the user

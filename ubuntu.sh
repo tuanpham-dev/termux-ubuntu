@@ -1,4 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
+wget "https://andronixos.sfo2.cdn.digitaloceanspaces.com/OS-Files/setup-audio.sh" && chmod +x setup-audio.sh && ./setup-audio.sh
+
 folder=ubuntu20-fs
 dlink="https://raw.githubusercontent.com/AndronixApp/AndronixOrigin/master/APT"
 if [ -d "$folder" ]; then
@@ -24,7 +26,8 @@ if [ "$first" != 1 ];then
     esac
     wget "https://github.com/AndronixApp/AndronixOrigin/raw/master/Rootfs/Ubuntu20/focal-${archurl}.tar.gz" -O $tarball
 
-fi
+  fi
+
   cur=`pwd`
   mkdir -p "$folder"
   cd "$folder"
@@ -40,7 +43,6 @@ cat > $bin <<- EOM
 cd \$(dirname \$0)
 pulseaudio -k >> /dev/null 2>&1
 pulseaudio --start >> /dev/null 2>&1
-## unset LD_PRELOAD in case termux-exec is installed
 unset LD_PRELOAD
 command="proot"
 command+=" --link2symlink"
@@ -78,10 +80,8 @@ EOM
 mkdir -p ubuntu20-fs/usr/share/andronix
 mkdir -p ubuntu20-fs/var/tmp
 rm -rf ubuntu20-fs/usr/local/bin/*
-echo "127.0.0.1 localhost localhost" > $folder/etc/hosts
+echo "127.0.0.1 localhost" > $folder/etc/hosts
 echo "Set disable_coredump false" > $folder/etc/sudo.conf
-wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.profile -O ubuntu20-fs/root/.profile.1 > /dev/null
-cat $folder/root/.profile.1 >> $folder/root/.profile && rm -rf $folder/root/.profile.1
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.bash_profile -O ubuntu20-fs/root/.bash_profile > /dev/null
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vnc -P ubuntu20-fs/usr/local/bin > /dev/null
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vncpasswd -P ubuntu20-fs/usr/local/bin > /dev/null
