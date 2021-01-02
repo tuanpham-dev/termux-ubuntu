@@ -53,40 +53,53 @@ On Ubuntu, run this command to stop VNC Server:
 vncserver-stop
 ```
 
+## Issues
+
+### Group Issue
+
+If you get an issue message like this:
+
+```
+groups: cannot find name for group ID 20305
+groups: cannot find name for group ID 50305
+```
+
+You can simply add group with this command:
+
+```
+sudo groupadd --gid 20305 permagrp5
+sudo groupadd --gid 50305 permagrp6
+```
+
 ## Other
 
 ### Install VS Code
 
-VSCode ARM is now officially supported by Microsoft. You can install it with following commands:
+VSCode ARM is now officially supported by Microsoft. You can download it here: https://code.visualstudio.com/download
 
-```bash
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt install apt-transport-https
-sudo apt update
-sudo apt install code # or code-insiders
-```
+### Install Theme & Icons
 
-### Theme
+- Prof-XFCE-theme is the best for me. You can download it here: https://www.gnome-look.org/p/1334420/
 
-- Prof-XFCE-theme is the best for me. You can download it here:
+- Vimix icon is nice. You can download it here: https://www.gnome-look.org/p/1273372/
+
+- After download \*.tar.xz files you can extract them and copy to themes/icons folders:
 
 ```
-https://www.gnome-look.org/p/1334420/
-```
 
-- Vimix icon is nice. You can download it here:
-
-```
-https://www.gnome-look.org/p/1334420/
-```
-
-- After download \*.tar.xz file you can extract it and copy to theme/icons folder:
-
-```
+mkdir -p ~/.local/share/icons ~/.local/share/themes
+cd ~/Downloads
 tar -xf "Prof--XFCE- 2.1.tar.gz"
-cp -rp "Prof--XFCE- 2.1" ~/.local/share/icons
+mv "Prof--XFCE- 2.1" ~/.local/share/themes/
 tar -xf Vimix.tar.xz
-cp -rp Vimix ~/.local/share/icons/
+mv Vimix ~/.local/share/icons/
+
+```
+
+### Intall Oh My Zsh
+
+```
+cp ~/.profile ~/.zprofile
+sudo apt install git curl zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```

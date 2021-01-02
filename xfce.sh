@@ -53,6 +53,5 @@ wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.pro
 cat $HOME/.profile.1 >> $HOME/.profile && rm -rf $HOME/.profile.1
 source ~/.profile
 
-
 vncpasswd
 vncserver-start

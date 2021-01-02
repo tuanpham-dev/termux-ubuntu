@@ -2,6 +2,8 @@ groupadd --gid 3003 permagrp
 groupadd --gid 9997 permagrp2
 groupadd --gid 21081 permagrp3
 groupadd --gid 51081 permagrp4
+groupadd --gid 20305 permagrp5
+groupadd --gid 50305 permagrp6
 
 rm -rf /etc/resolv.conf
 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
