@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #Get the necessary components
 sudo apt-get update
 sudo apt install udisks2 -y
@@ -7,7 +6,8 @@ echo "" > /var/lib/dpkg/info/udisks2.postinst
 sudo dpkg --configure -a
 sudo apt-mark hold udisks2
 
-sudo apt update && sudo apt install xfce4 xfce4-goodies xfce4-terminal tigervnc-standalone-server tigervnc-common exo-utils dbus-x11 pavucontrol libexo-1-0 ffmpeg --no-install-recommends -y
+sudo apt update && sudo apt upgrade -y && sudo apt install xfce4 xfce4-goodies xfce4-terminal tigervnc-standalone-server tigervnc-common exo-utils dbus-x11 pavucontrol libexo-1-0 ffmpeg language-pack-en --no-install-recommends -y
+sudo apt --fix-broken install
 mkdir -p ~/.vnc
 
 echo '#!/bin/bash
@@ -48,6 +48,11 @@ echo " "
 
 echo "export DISPLAY=":1"" >> /etc/profile
 source /etc/profile
+
+wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/.profile -O $HOME/.profile.1 > /dev/null
+cat $HOME/.profile.1 >> $HOME/.profile && rm -rf $HOME/.profile.1
+source ~/.profile
+
 
 vncpasswd
 vncserver-start
