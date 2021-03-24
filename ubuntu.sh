@@ -87,7 +87,17 @@ wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vnc 
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vncpasswd -P ubuntu20-fs/usr/local/bin > /dev/null
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vncserver-stop -P ubuntu20-fs/usr/local/bin > /dev/null
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/vncserver-start -P ubuntu20-fs/usr/local/bin > /dev/null
+
 wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/firstrun -P ubuntu20-fs/usr/share/andronix > /dev/null
+
+mkdir -p ubuntu20-fs/usr/share/andronix
+case "$1" in
+  "nde")
+    ;;
+  *)
+    wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/de-xfce -O ubuntu20-fs/usr/share/andronix/de-install > /dev/null
+    ;;
+esac
 
 chmod +x ubuntu20-fs/root/.bash_profile
 chmod +x ubuntu20-fs/root/.profile

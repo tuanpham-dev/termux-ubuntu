@@ -210,12 +210,11 @@ then
 	sed -i s/"PermitRootLogin yes"/"#PermitRootLogin prohibit-password"/g /etc/ssh/sshd_config
 fi
 msg "You can start using your newly installed Andronix Modded OS..."
-echo "#!/bin/bash
-wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/xfce.sh -O ~/xfce.sh
-chmod +x ~/xfce.sh
-bash ~/xfce.sh
-rm -rf ~/xfce.sh
-rm -rf ~/.bash_profile" > /home/$USER/.bash_profile 
-chmod +x /home/$USER/.bash_profile
+
+if [ -f /usr/share/andronix/de-install ]; then
+  chmod +x /usr/share/andronix/de-install
+  /usr/share/andronix/de-install $USER
+fi
+
 # Replace the current activity with a new shell for the user
 exec su - $USER

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "#!/bin/bash
+wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/xfce.sh -O ~/xfce.sh
+chmod +x ~/xfce.sh
+bash ~/xfce.sh
+rm -rf ~/xfce.sh
+rm -rf ~/.bash_profile" > "/home/$1/.bash_profile" 
+chmod +x "/home/$1/.bash_profile"

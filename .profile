@@ -11,7 +11,11 @@ exit() {
   pkill ssh-agent
   pkill gpg-agent
   pkill pulseaudio
-  vncserver -kill :1
+
+  if [ ! -z `which vncserver` ]; then
+    vncserver -kill :1
+  fi
+  
   unset LD_PRELOAD
   unset -f exit
   exit
