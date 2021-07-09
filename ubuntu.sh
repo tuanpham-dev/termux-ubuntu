@@ -56,14 +56,13 @@ if [ ! -f "${cur}/${folder}/proc/fakethings/stat" ]; then
   procs_running 1
   procs_blocked 0
   softirq 175407567 14659158 51739474 28359 5901272 8879590 0 11988166 46104015 0 36107533
-  EOF
+EOF
 fi
-
 
 if [ ! -f "${cur}/${folder}/proc/fakethings/version" ]; then
   cat <<- EOF > "${cur}/${folder}/proc/fakethings/version"
   Linux version 5.4.0-faked (andronix@fakeandroid) (gcc version 4.9.x (Andronix fake /proc/version) ) #1 SMP PREEMPT Sun Sep 13 00:00:00 IST 2020
-  EOF
+EOF
 fi
 
 if [ ! -f "${cur}/${folder}/proc/fakethings/vmstat" ]; then
@@ -171,7 +170,7 @@ if [ ! -f "${cur}/${folder}/proc/fakethings/vmstat" ]; then
   swap_ra 0
   swap_ra_hit 7
   speculative_pgfault 221449963
-  EOF
+EOF
 fi
 
 bin=start-ubuntu20.sh
