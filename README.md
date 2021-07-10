@@ -77,6 +77,14 @@ sudo groupadd --gid 50305 permagrp6
 
 VSCode ARM is now officially supported by Microsoft. You can download it here: https://code.visualstudio.com/download
 
+### Install LibreOffice
+
+On Ubuntu, run this command to install LibreOffice with patch
+
+```
+wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/librepatch.sh && chmod +x librepatch.sh && bash librepatch.sh
+```
+
 ### Install Theme & Icons
 
 - Prof-XFCE-theme is the best for me. You can download it here: https://www.gnome-look.org/p/1334420/
