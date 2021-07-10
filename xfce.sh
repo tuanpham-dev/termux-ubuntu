@@ -1,13 +1,16 @@
 #!/bin/bash
 #Get the necessary components
-sudo apt-get update
+sudo apt update
 sudo apt install udisks2 -y
 echo "" > /var/lib/dpkg/info/udisks2.postinst
 sudo dpkg --configure -a
 sudo apt-mark hold udisks2
-
-sudo apt update && sudo apt upgrade -y && sudo apt install xfce4 xfce4-goodies xfce4-terminal tigervnc-standalone-server tigervnc-common exo-utils dbus-x11 pavucontrol libexo-1-0 ffmpeg language-pack-en --no-install-recommends -y
+sudo apt install keyboard-configuration -y
+sudo apt install tzdata -y
+sudo apt install sudo wget nano inetutils-tools dialog -y
+sudo apt install xfce4 xfce4-goodies xfce4-terminal tigervnc-standalone-server tigervnc-common exo-utils dbus-x11 pavucontrol libexo-1-0 ffmpeg language-pack-en --no-install-recommends -y
 sudo apt --fix-broken install
+sudo apt clean
 
 mkdir -p ~/.vnc
 
@@ -16,6 +19,8 @@ echo '#!/bin/bash
 export PULSE_SERVER=127.0.0.1
 XAUTHORITY=$HOME/.Xauthority
 export XAUTHORITY
+LANG=en_US.UTF-8
+export LANG
 echo $$ > /tmp/xsession.pid
 dbus-launch --exit-with-session startxfce4 &' > ~/.vnc/xstartup
 chmod +x ~/.vnc/xstartup

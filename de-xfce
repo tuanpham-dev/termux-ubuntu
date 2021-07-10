@@ -1,6 +1,8 @@
 #!/bin/bash
 
 echo "#!/bin/bash
+rm -rf /etc/resolv.conf
+echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
 wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/xfce.sh -O ~/xfce.sh
 chmod +x ~/xfce.sh
 bash ~/xfce.sh
