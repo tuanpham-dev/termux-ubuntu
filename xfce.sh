@@ -8,7 +8,7 @@ sudo apt-mark hold udisks2
 sudo apt install keyboard-configuration -y
 sudo apt install tzdata -y
 sudo apt install sudo wget nano inetutils-tools dialog -y
-sudo apt install xfce4 xfce4-goodies xfce4-terminal tigervnc-standalone-server tigervnc-common exo-utils dbus-x11 pavucontrol libexo-1-0 ffmpeg language-pack-en --no-install-recommends -y
+sudo apt install xfce4 xfce4-goodies xfce4-terminal tigervnc-standalone-server tigervnc-common exo-utils dbus-x11 pulseaudio pavucontrol libexo-1-0 ffmpeg language-pack-en --no-install-recommends -y
 sudo apt --fix-broken install
 sudo apt clean
 
