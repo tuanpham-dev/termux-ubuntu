@@ -75,7 +75,9 @@ sudo groupadd --gid 50305 permagrp6
 
 ### Install VS Code
 
-VSCode ARM is now officially supported by Microsoft. You can download it here: https://code.visualstudio.com/download
+- VSCode ARM is now officially supported by Microsoft. You can download it here: https://code.visualstudio.com/download
+
+- If VSCode does not run, try install older version. E.g. https://update.code.visualstudio.com/1.50.1/linux-deb-arm64/stable
 
 ### Install LibreOffice
 
@@ -84,6 +86,16 @@ On Ubuntu, run this command to install LibreOffice with patch
 ```
 wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/librepatch.sh && chmod +x librepatch.sh && bash librepatch.sh
 ```
+
+### Install FireFox
+
+On Ubuntu, run this command to install FireFox
+
+```
+sudo apt install firefox
+```
+
+Follow this url to fix firefox crash https://github.com/termux/proot/issues/139#issuecomment-751988264
 
 ### Install Theme & Icons
 
