@@ -1,7 +1,7 @@
 #!/bin/bash
 #Get the necessary components
-sudo apt install software-properties-common
-sudo add-apt-repository ppa:xubuntu-dev/staging
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:xubuntu-dev/staging -y
 sudo apt update
 sudo apt install udisks2 -y
 echo "" > /var/lib/dpkg/info/udisks2.postinst
