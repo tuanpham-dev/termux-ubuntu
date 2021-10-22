@@ -1,5 +1,7 @@
 #!/bin/bash
 #Get the necessary components
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:xubuntu-dev/staging
 sudo apt update
 sudo apt install udisks2 -y
 echo "" > /var/lib/dpkg/info/udisks2.postinst
@@ -8,7 +10,7 @@ sudo apt-mark hold udisks2
 sudo apt install keyboard-configuration -y
 sudo apt install tzdata -y
 sudo apt install sudo wget nano inetutils-tools dialog -y
-sudo apt install xfce4 xfce4-goodies xfce4-terminal tigervnc-standalone-server tigervnc-common exo-utils dbus-x11 pulseaudio pavucontrol libexo-1-0 ffmpeg language-pack-en --no-install-recommends -y
+sudo apt install xfce4 xfce4-goodies xfce4-terminal tigervnc-standalone-server tigervnc-common ffmpeg language-pack-en --no-install-recommends -y
 sudo apt --fix-broken install
 sudo apt clean
 
