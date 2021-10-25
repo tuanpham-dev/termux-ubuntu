@@ -17,4 +17,4 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A
 apt update -y
 apt install chromium -y
 
-sed -i 's/chromium %U/chromium --no-sandbox %U/g' /usr/share/applications/chromium.desktop
+sed -i 's/chromium %U/chromium --no-sandbox --test-type %U/g' /usr/share/applications/chromium.desktop
