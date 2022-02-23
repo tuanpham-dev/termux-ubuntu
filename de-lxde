@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "#!/bin/bash
+rm -rf /etc/resolv.conf
+echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
+wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/lxde.sh -O ~/lxde.sh
+chmod +x ~/lxde.sh
+bash ~/lxde.sh
+rm -rf ~/lxde.sh
+rm -rf ~/.bash_profile" > "/home/$1/.bash_profile"
+chmod +x "/home/$1/.bash_profile"

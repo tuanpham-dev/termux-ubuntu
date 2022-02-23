@@ -23,7 +23,7 @@ if [ "$first" != 1 ];then
 		amd64)
 			archurl="amd64" ;;
 		x86_64)
-			archurl="amd64" ;;  
+			archurl="amd64" ;;
 		*)
 			echo "unknown architecture"; exit 1 ;;
 		esac
@@ -248,6 +248,9 @@ mkdir -p ubuntu20-fs/usr/share/andronix
 case "$1" in
 	"nde")
 		;;
+  "lxde")
+		wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/de-lxde -O ubuntu20-fs/usr/share/andronix/de-install > /dev/null
+    ;;
 	*)
 		wget -q https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/de-xfce -O ubuntu20-fs/usr/share/andronix/de-install > /dev/null
 		;;
