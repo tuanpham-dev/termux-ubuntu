@@ -13,8 +13,22 @@ This installs Ubuntu 20 with xfce4 desktop on Termux. All scripts are from Andro
 
 Copy and paste this command to Termux:
 
+### Ubuntu 20 With XFCE4
+
 ```bash
 pkg install wget curl proot tar -y && wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/ubuntu.sh && chmod +x ubuntu.sh && bash ubuntu.sh
+```
+
+### Ubuntu 20 CLI Only
+
+```bash
+pkg install wget curl proot tar -y && wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/ubuntu.sh && chmod +x ubuntu.sh && bash ubuntu.sh nde
+```
+
+### Ubuntu 20 With LXDE
+
+```bash
+pkg install wget curl proot tar -y && wget https://raw.githubusercontent.com/tuanpham-dev/termux-ubuntu/master/ubuntu.sh && chmod +x ubuntu.sh && bash ubuntu.sh lxde
 ```
 
 ## Run
@@ -52,6 +66,12 @@ On Ubuntu, run this command to stop VNC Server:
 ```bash
 vncserver-stop
 ```
+
+## VNC Client For Android
+
+VNC Viewer (from RealVNC) is the best when you use your phone. Unfortunately, it does not does not support Samsung DEX.
+
+[AVNC](https://f-droid.org/en/packages/com.gaurav.avnc/index.html) is another good VNC client. In my opinion it is the best when you use your tablet or Samsung Dex.
 
 ## Issues
 
